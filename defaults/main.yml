@@ -1,0 +1,5 @@
+---
+setup_aliases:
+  root: /dev/null
+setup_proc_hidepid: '0'
+setup_timezone: PST8PDT

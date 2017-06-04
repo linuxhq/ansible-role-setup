@@ -24,7 +24,7 @@
         owner: root
         group: root
         mode: "{{ item.mode }}"
-      with_items: 
+      with_items:
         - { src: environment.j2, dest: /etc/environment, mode: '0644' }
         - { src: hostname.j2, dest: /etc/hostname, mode: '0644' }
         - { src: hosts.j2, dest: /etc/hosts, mode: '0644' }

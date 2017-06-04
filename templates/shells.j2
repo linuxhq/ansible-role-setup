@@ -1,4 +1,5 @@
 {% if setup_shells|length > 0 %}
+# {{ ansible_managed }}
 {%   for shell in setup_shells %}
 {{ shell }}
 {%   endfor %}

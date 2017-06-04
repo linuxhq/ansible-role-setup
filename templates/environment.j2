@@ -1,4 +1,5 @@
 {% if setup_environment|length > 0 %}
+# {{ ansible_managed }}
 {%   for env in setup_environment %}
 {%     if env.name is defined and env.value is defined %}
 {{ env.name|upper }}="{{ env.value }}"

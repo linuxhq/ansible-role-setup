@@ -1,4 +1,5 @@
 {% if setup_securetty|length > 0 %}
+# {{ ansible_managed }}
 {%   for tty in setup_securetty %}
 {{ tty }}
 {%   endfor %}

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/linuxhq/ansible-role-setup.svg?branch=master)](https://travis-ci.org/linuxhq/ansible-role-setup)
 
-RHEL/CentOS - Configure aliases, hostname, motd, and timezone
+RHEL/CentOS - Configure aliases, hostname, securetty, shells and more
 
 ## Requirements
 
@@ -12,10 +12,23 @@ None
 
 Available variables are listed below, along with default values:
 
-    setup_aliases:
-      root: /dev/null
-    setup_proc_hidepid: '0'
-    setup_timezone: PST8PDT
+    setup_aliases: {}
+    setup_environment: []
+    setup_hosts: []
+    setup_hostname: "{{ inventory_hostname }}"
+    setup_motd: ''
+    setup_securetty:
+      - console
+      - hvc0
+      - tty1
+      - xvc0
+    setup_shells:
+      - /bin/sh
+      - /bin/bash
+      - /sbin/nologin
+      - /usr/bin/sh
+      - /usr/bin/bash
+      - /usr/sbin/nologin
 
 ## Dependencies
 
@@ -27,7 +40,7 @@ None
       roles:
         - role: linuxhq.setup
           setup_aliases:
-            root: taylor@linuxhq.org
+            root: /dev/null
 
 ## License
 

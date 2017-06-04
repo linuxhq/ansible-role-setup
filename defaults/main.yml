@@ -1,5 +1,19 @@
 ---
-setup_aliases:
-  root: /dev/null
-setup_proc_hidepid: '0'
-setup_timezone: PST8PDT
+setup_aliases: {}
+setup_environment: []
+setup_hosts: []
+setup_hostname: "{{ inventory_hostname }}"
+setup_motd: ''
+setup_securetty:
+  - console
+  - hvc0
+  - tty1
+  - xvc0
+setup_shells:
+  - /bin/sh
+  - /bin/bash
+  - /sbin/nologin
+  - /usr/bin/sh
+  - /usr/bin/bash
+  - /usr/sbin/nologin
+...

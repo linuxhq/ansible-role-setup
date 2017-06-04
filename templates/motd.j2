@@ -1,9 +1,1 @@
-
-                      This system is managed by Ansible. 
-          
-          OS          : {{ ansible_distribution }} {{ ansible_distribution_version }}
-          Hostname    : {{ inventory_hostname if inventory_hostname != 'localhost' else ansible_fqdn }}
-          IP address  : {{ ansible_default_ipv4.address }}
-          System type : {{ ansible_system }}
-          Virt type   : {{ ansible_virtualization_type }} 
-
+{{ setup_motd|b64decode }}

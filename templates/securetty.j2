@@ -1,0 +1,5 @@
+{% if setup_securetty|length > 0 %}
+{%   for tty in setup_securetty %}
+{{ tty }}
+{%   endfor %}
+{% endif %}

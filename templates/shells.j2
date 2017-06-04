@@ -1,0 +1,5 @@
+{% if setup_shells|length > 0 %}
+{%   for shell in setup_shells %}
+{{ shell }}
+{%   endfor %}
+{% endif %}

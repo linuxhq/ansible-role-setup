@@ -43,7 +43,7 @@ fax:		root
 quagga:		root
 radvd:		root
 pvm:		root
-amanda:		root
+amandabackup:		root
 privoxy:	root
 ident:		root
 named:		root
@@ -95,9 +95,7 @@ decode:		root
 # Person who should get root's mail
 #root:		marc
 
-{% if setup_aliases is defined %}
-# Ansible configuration
-{%   for key, value in setup_aliases.iteritems()|sort %}
+# {{ ansible_managed }}
+{% for key, value in setup_aliases.iteritems()|sort %}
 {{ key }}:		{{ value }}
-{%   endfor %}
-{% endif %}
+{% endfor %}

@@ -2,3 +2,4 @@
 - name: newaliases
   tags: setup
   command: newaliases
+...

@@ -1,4 +1,11 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-{{ ansible_default_ipv4.address }}	{{ inventory_hostname if inventory_hostname != 'localhost' else ansible_fqdn }} {{ ansible_hostname }}
+{% if setup_hosts|length > 0 %}
+# {{ ansible_managed }}
+{%   for host in setup_hosts %}
+{%     if host.ip is defined and host.host_f is defined and host.host_s is defined %}
+{{ host.ip }}	{{ host.host_f }} {{ host.host_s }}
+{%     endif %}
+{%   endfor %}
+{% endif %}

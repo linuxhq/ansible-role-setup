@@ -2,17 +2,19 @@
 dependencies: []
 galaxy_info:
   author: tkimball83
-  description: RHEL/CentOS - Configure aliases, hostname, motd, and timezone
+  description: RHEL/CentOS - Configure aliases, motd, securetty, shells and more
   license: BSD
   min_ansible_version: 2.0
   platforms:
     - name: EL
       versions: 
-        - 6
         - 7
   galaxy_tags:
     - aliases
+    - environment
     - hostname
+    - hosts
     - motd
-    - system
-    - timezone
+    - securetty
+    - shells
+...

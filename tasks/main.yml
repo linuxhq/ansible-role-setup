@@ -1,58 +1,36 @@
 ---
-- name: Install setup package
+- name: Ensure the setup package is installed
   tags: setup
-  yum: name=setup
-       state=present
-       update_cache=yes
+  yum:
+    name: setup
+    state: present
+    update_cache: yes
   register: setup_yum
 
-- name: Configure hostname (inventory_hostname)
-  tags: setup
-  hostname: name={{ inventory_hostname }}
-  when: inventory_hostname != 'localhost'
-
-- name: Configure hostname (ansible_fqdn)
-  tags: setup
-  hostname: name={{ ansible_fqdn }}
-  when: inventory_hostname == 'localhost'
-
-- name: Link localtime to timezone entry
-  tags: setup
-  file: src=/usr/share/zoneinfo/{{ setup_timezone }}
-        dest=/etc/localtime
-        owner=root
-        group=root
-        state=link
-        force=yes
-  when: setup_timezone is defined
-
 - block:
-    - name: Gathering facts
-      action: setup
-    - name: Configure aliases
-      template: src=aliases.j2
-                dest=/etc/aliases
-                owner=root
-                group=root
-                mode=0644
+    - name: Applying aliases configuration
+      template:
+        src: aliases.j2
+        dest: /etc/aliases
+        owner: root
+        group: root
+        mode: 0644
       notify: newaliases
-    - name: Configure clock, hostname, and motd
-      template: src={{ item.src }}
-                dest={{ item.dst }}
-                owner=root
-                group=root
-                mode=0644
-      with_items:
-        - { src: clock.j2, dst: /etc/sysconfig/clock }
-        - { src: hostname.j2, dst: /etc/hostname }
-        - { src: hosts.j2, dst: /etc/hosts }
-        - { src: motd.j2, dst: /etc/motd }
-    - name: Configure /proc hidepid settings
-      mount: name=/proc
-             fstype=proc
-             opts=defaults,hidepid={{ setup_proc_hidepid }}
-             src=/proc
-             state=mounted
-      when: setup_proc_hidepid is defined
+
+    - name: Applying env, hosts, motd, tty, and shell configurations
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: "{{ item.mode }}"
+      with_items: 
+        - { src: environment.j2, dest: /etc/environment, mode: '0644' }
+        - { src: hostname.j2, dest: /etc/hostname, mode: '0644' }
+        - { src: hosts.j2, dest: /etc/hosts, mode: '0644' }
+        - { src: motd.j2, dest: /etc/motd, mode: '0644' }
+        - { src: securetty.j2, dest: /etc/securetty, mode: '0600' }
+        - { src: shells.j2, dest: /etc/shells, mode: '0644' }
   tags: setup
   when: setup_yum|success
+...

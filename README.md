@@ -12,7 +12,7 @@ None
 
 Available variables are listed below, along with default values:
 
-    setup_aliases: {}
+    setup_aliases: []
     setup_environment: []
     setup_hosts: []
     setup_hostname: "{{ inventory_hostname }}"
@@ -40,7 +40,9 @@ None
       roles:
         - role: linuxhq.setup
           setup_aliases:
-            root: /dev/null
+            - name: root
+              value:
+                - /dev/null
 
 ## License
 

@@ -1,5 +1,5 @@
 ---
-setup_aliases: {}
+setup_aliases: []
 setup_environment: []
 setup_hosts: []
 setup_hostname: "{{ inventory_hostname }}"

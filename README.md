@@ -17,6 +17,7 @@ Available variables are listed below, along with default values:
     setup_hosts: []
     setup_hostname: "{{ inventory_hostname }}"
     setup_motd: ''
+    setup_profile_d: []
     setup_securetty:
       - console
       - hvc0

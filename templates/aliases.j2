@@ -99,7 +99,7 @@ decode:		root
 # {{ ansible_managed }}
 {%   for alias in setup_aliases %}
 {%     if alias.name is defined and alias.value is defined %}
-{{ alias.name }}:	{{ alias.value|join(', ') }}
+{{ alias.name }}:		{{ alias.value|join(', ') }}
 {%     endif %}
 {%   endfor %}
 {% endif %}

@@ -96,7 +96,7 @@ decode:		root
 #root:		marc
 
 {% if setup_aliases|length > 0 %}
-{{ ansible_managed }}
+# {{ ansible_managed }}
 {%   for alias in setup_aliases %}
 {%     if alias.name is defined and alias.value is defined %}
 {{ alias.name }}:	{{ alias.value|join(', ') }}

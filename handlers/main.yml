@@ -1,5 +1,6 @@
 ---
 - name: newaliases
   tags: setup
+  become: true
   command: newaliases
 ...

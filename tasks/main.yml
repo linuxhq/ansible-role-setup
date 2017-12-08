@@ -1,10 +1,10 @@
 ---
 - name: Ensure the setup package is installed
   tags: setup
+  become: true
   yum:
     name: setup
     state: present
-    update_cache: yes
   register: setup_yum
 
 - block:
@@ -44,5 +44,6 @@
         - item.name is defined
         - item.script is defined
   tags: setup
+  become: true
   when: setup_yum|success
 ...

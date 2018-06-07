@@ -4,7 +4,7 @@ galaxy_info:
   author: tkimball83
   description: RHEL/CentOS - Configure aliases, motd, securetty, shells and more
   license: GPLv3
-  min_ansible_version: 2.4
+  min_ansible_version: 2.5
   platforms:
     - name: EL
       versions:

@@ -1,5 +1,5 @@
 ---
-- name: Ensure the setup package is installed
+- name: Ensure that the setup package is installed
   tags: setup
   become: true
   yum:
@@ -7,43 +7,49 @@
     state: present
   register: setup_yum
 
-- block:
-    - name: Applying aliases configuration
-      template:
-        src: aliases.j2
-        dest: /etc/aliases
-        owner: root
-        group: root
-        mode: 0644
-      notify: newaliases
-
-    - name: Applying env, hosts, motd, tty, and shell configurations
-      template:
-        src: "{{ item.src }}"
-        dest: "{{ item.dest }}"
-        owner: root
-        group: root
-        mode: "{{ item.mode }}"
-      with_items:
-        - { src: environment.j2, dest: /etc/environment, mode: '0644' }
-        - { src: hostname.j2, dest: /etc/hostname, mode: '0644' }
-        - { src: hosts.j2, dest: /etc/hosts, mode: '0644' }
-        - { src: motd.j2, dest: /etc/motd, mode: '0644' }
-        - { src: securetty.j2, dest: /etc/securetty, mode: '0600' }
-        - { src: shells.j2, dest: /etc/shells, mode: '0644' }
-
-    - name: Applying profile.d configurations
-      template:
-        src: profile_d.j2
-        dest: "/etc/profile.d/{{ item.name }}"
-        owner: root
-        group: root
-        mode: 0644
-      with_items: "{{ setup_profile_d }}"
-      when:
-        - item.name is defined
-        - item.script is defined
+- name: Attempting to overlay aliases configuration
   tags: setup
   become: true
-  when: setup_yum|success
+  template:
+    src: aliases.j2
+    dest: /etc/aliases
+    owner: root
+    group: root
+    mode: 0644
+  notify: newaliases
+  when: setup_yum is success
+
+- name: Attempting to overlay env, hosts, motd, tty, and shell configurations
+  tags: setup
+  become: true
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  with_items:
+    - { src: environment.j2, dest: /etc/environment, mode: '0644' }
+    - { src: hostname.j2, dest: /etc/hostname, mode: '0644' }
+    - { src: hosts.j2, dest: /etc/hosts, mode: '0644' }
+    - { src: motd.j2, dest: /etc/motd, mode: '0644' }
+    - { src: securetty.j2, dest: /etc/securetty, mode: '0600' }
+    - { src: shells.j2, dest: /etc/shells, mode: '0644' }
+  when: setup_yum is success
+
+- name: Applying profile.d configurations
+  tags: setup
+  become: true
+  template:
+    src: profile_d.j2
+    dest: "/etc/profile.d/{{ item.name }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ setup_profile_d }}"
+  when:
+    - item.name is defined
+    - item.script is defined
+    - setup_profile_d|length > 0
+    - setup_yum is success
 ...

@@ -97,6 +97,7 @@ decode:		root
 
 # {{ ansible_managed }}
 # setup_aliases: {{ setup_aliases|length }}
+
 {% if setup_aliases|length > 0 %}
 {%   for alias in setup_aliases %}
 {%     if alias.name is defined and alias.value is defined %}

@@ -1,6 +1,7 @@
 ---
 dependencies: []
 galaxy_info:
+  role_name: setup
   author: tkimball83
   description: RHEL/CentOS - Configure aliases, motd, securetty, shells and more
   license: GPLv3
